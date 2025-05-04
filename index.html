@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short Polling</title>
+</head>
+<body>
+    <h1>Short Polling</h1>
+    <div id="polling-data"></div>
+    <script>
+        async function shortPolling() {
+            try {
+                const response = await fetch('http://localhost:3000/polling');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const data = await response.json();
+                document.getElementById('polling-data').innerHTML = data.data;
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+        setInterval(shortPolling, 5000); // Poll every 5 seconds
+    </script>
+</body>
+</html>
